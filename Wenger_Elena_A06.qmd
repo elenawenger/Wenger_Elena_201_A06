@@ -106,7 +106,7 @@ Extract the value `8162` (LeBron James points) in 2 different ways:
 player_info[[2]][[4]]
 
 # extract using names
-player_info$'LJ'$'points'
+player_info$LJ$points
 ```
 
 
