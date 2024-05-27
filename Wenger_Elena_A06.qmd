@@ -203,17 +203,24 @@ ie: 91 rounds to 90; 173 rounds to 200; 1450 rounds to 1000
 Hint: use `MARGIN = 1:2` to apply the function to each value instead of only a row/col.
 
 ```{r}
+# initialize function to round based on the number of digits
 round_num_dig <- function(x){
+  # calculate the number of digits in each number
   num_digits <- nchar(as.character(x))
+
+  # if 2 digits, round to the nearest 10th
   if(num_digits == 2){
     return(round(x / 10) * 10)
+  # if 3 digits, round to the nearest 100th
   }else if(num_digits == 3){
     return(round(x / 100) * 100)
+  # if 4 digits, round to the nearest 1000th
   }else{
     return(round(x / 1000) * 1000)
   }
 }
 
+# use apply function on each element of matrix and use the user-defined matrix on each
 apply(mat_rand, MARGIN = 1:2, round_num_dig)
 
 ```
@@ -239,6 +246,8 @@ max_temps <- read_tsv("state_max_temps.tsv") |>
 Calculate the average temperature for each month across the whole data frame (using the data for all three states together).
 
 ```{r}
+# find the mean on only the columns 3-14 (months of the year); gives average temperature for each month
+apply(max_temps[, 3:14], 2, mean)
 
 ```
 
@@ -254,6 +263,14 @@ Create three new data frames by slicing the data by state.
 No need to print any output here.
 
 ```{r}
+# slice the data frame to only include CO
+co_only <- max_temps[max_temps$state == 'CO', ]
+
+# slice the data frame to only include OH
+oh_only <- max_temps[max_temps$state == 'OH', ]
+
+# slice the data frame to only include VA
+va_only <- max_temps[max_temps$state == 'VA', ]
 
 ```
 
@@ -275,6 +292,20 @@ Example (this is NOT the answer just an example of what goes in the {}):
 Note: This code should still run successfully even if the numbers were to change.
 
 ```{r}
+# calculate the median annual temperature by using the median function on each row
+median_annual <- apply(co_only[, 3:14], 1, median)
+#print(median_annual)
+
+# find the years when the maximum and minimum median annual temperatures occurred
+year_max <- co_only$year[which.max(median_annual)]
+year_min <- co_only$year[which.min(median_annual)]
+
+# find the maximum and minimum median annual temperatures
+max_median <- max(median_annual)
+min_median <- min(median_annual)
+
+# print the final statement
+print(paste0('The maximum median annual temperature of ', max_median, ' occurred in ', year_max, ' and the minimum median annual temperature of ', min_median, ' occurred in ', year_min, '.'))
 
 ```
 
