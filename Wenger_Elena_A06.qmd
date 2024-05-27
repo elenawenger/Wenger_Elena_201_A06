@@ -203,6 +203,18 @@ ie: 91 rounds to 90; 173 rounds to 200; 1450 rounds to 1000
 Hint: use `MARGIN = 1:2` to apply the function to each value instead of only a row/col.
 
 ```{r}
+round_num_dig <- function(x){
+  num_digits <- nchar(as.character(x))
+  if(num_digits == 2){
+    return(round(x / 10) * 10)
+  }else if(num_digits == 3){
+    return(round(x / 100) * 100)
+  }else{
+    return(round(x / 1000) * 1000)
+  }
+}
+
+apply(mat_rand, MARGIN = 1:2, round_num_dig)
 
 ```
 
