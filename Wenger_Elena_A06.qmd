@@ -319,6 +319,24 @@ Example: The number 312 would return 6 (3 + 1 + 2)
 Run your function with 935068.
 
 ```{r}
+# define function
+sum_of_dig <- function(num){
+  # base case: if number is only 1 digit
+  if(num < 10){
+    return(num)
+  }
+  # isolate last number of digit 
+  last_dig <- num %% 10
+  # remove the last digit from the original number
+  trunc_num <- num %/% 10
+  
+  # recursive case: add the last digit and run the function again with the truncated number
+  return(last_dig + sum_of_dig(trunc_num))
+}
+
+# test the function
+sum_of_dig(935068)
+
 
 ```
 
