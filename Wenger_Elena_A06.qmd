@@ -102,7 +102,11 @@ Extract the value `8162` (LeBron James points) in 2 different ways:
 - using names
 
 ```{r}
+# extract using indexing
+player_info[[2]][[4]]
 
+# extract using names
+player_info$'LJ'$'points'
 ```
 
 
@@ -113,6 +117,22 @@ Add a new named element to the end of each player's list called `height`. The he
 Print the `player_info` list to prove you were successful.
 
 ```{r}
+# add height element to each player
+player_info$MJ$height <- 78
+
+player_info$LJ$height <- 81
+
+player_info$KB$height <- 78
+
+player_info$KA$height <- 86
+
+player_info$SO$height <- 85
+
+
+# print player_info
+print(player_info)
+
+
 
 ```
 
@@ -132,6 +152,20 @@ Hint: initialize an empty list
 Note: this must still run correctly even if the values were to change or if another player were added to the list or if the player order changed.
 
 ```{r}
+# initialize an empty list
+points_per_game_list <- list()
+
+# create a for loop that iterates through each element of player_info
+for(element in player_info){
+  # add the points per game for each player to the list 
+  points_per_game_list <- append(points_per_game_list, element$points / element$games_played)
+}
+
+# make the name of the points per game list match that of the player info (initials of player)
+names(points_per_game_list)<- names(player_info)
+
+# print the final list
+print(points_per_game_list)
 
 ```
 
@@ -143,6 +177,11 @@ Use the list created in Part c and an appropriate apply function to round each v
 Store the output as a vector and print the results.
 
 ```{r}
+# use lapply to round each value to 2 decimal places; make into a vector using the unlist function
+points_per_game_vec <- unlist(lapply(points_per_game_list, function(x){round(x, 2)}))
+
+# print this vector
+print(points_per_game_vec)
 
 ```
 
